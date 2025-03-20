@@ -16,3 +16,4 @@
 ![Cat Swipe Screenshot](assets/images/interface_2.png)
 
 ## Ссылка на скачивание APK
+https://drive.google.com/file/d/1NkHMldu95PwuQc3uzAGYCc9wnxkyiyNY/view?usp=sharing
