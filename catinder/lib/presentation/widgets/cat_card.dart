@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 class CatCard extends StatelessWidget {
   final String imageUrl;
@@ -23,6 +23,10 @@ class CatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (imageUrl.isEmpty) {
+      return const SizedBox(height: 350, width: 320);
+    }
+
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (details.primaryVelocity! > 0) {
@@ -35,17 +39,15 @@ class CatCard extends StatelessWidget {
         position: animation,
         child: GestureDetector(
           onTap: onTap,
-          child: imageUrl.isEmpty
-              ? const CircularProgressIndicator(color: Colors.white)
-              : Container(
+          child: Container(
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: .7),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.white.withValues(alpha: .5),
+                  color: Colors.white.withValues(alpha: .2),
                   blurRadius: 10,
-                  spreadRadius: 10,
+                  spreadRadius: 5,
                 ),
               ],
             ),
@@ -58,8 +60,9 @@ class CatCard extends StatelessWidget {
                   ),
                   child: CachedNetworkImage(
                     imageUrl: imageUrl,
-                    placeholder: (context, url) => const CircularProgressIndicator(color: Colors.white),
-                    errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.red),
+                    errorWidget:
+                        (context, url, error) =>
+                            const Icon(Icons.error, color: Colors.red),
                     fit: BoxFit.cover,
                     height: 350,
                     width: 320,

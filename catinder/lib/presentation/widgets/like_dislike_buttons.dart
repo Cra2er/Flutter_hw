@@ -19,10 +19,7 @@ class LikeDislikeButtons extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.red,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: Colors.white,
-              width: 3,
-            ),
+            border: Border.all(color: Colors.white, width: 3),
           ),
           child: IconButton(
             icon: const Icon(Icons.heart_broken, color: Colors.white),
@@ -35,10 +32,7 @@ class LikeDislikeButtons extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.green,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: Colors.white,
-              width: 3,
-            ),
+            border: Border.all(color: Colors.white, width: 3),
           ),
           child: IconButton(
             icon: const Icon(Icons.favorite, color: Colors.white),

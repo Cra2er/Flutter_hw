@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/cat_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'domain/cubits/liked_cats_cubit.dart';
+import 'presentation/screens/cat_screen.dart';
 
 void main() {
   runApp(const CatApp());
@@ -10,17 +13,22 @@ class CatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Cat Swipe',
-      theme: ThemeData(
-        primaryColor: Colors.black,
-        scaffoldBackgroundColor: Colors.black,
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: Colors.white),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LikedCatsCubit>(create: (context) => LikedCatsCubit()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Cat Swipe',
+        theme: ThemeData(
+          primaryColor: Colors.black,
+          scaffoldBackgroundColor: Colors.black,
+          textTheme: const TextTheme(
+            bodyMedium: TextStyle(color: Colors.white),
+          ),
         ),
+        home: const CatScreen(),
       ),
-      home: const CatScreen(),
     );
   }
 }

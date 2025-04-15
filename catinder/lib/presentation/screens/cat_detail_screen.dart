@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 class CatDetailScreen extends StatelessWidget {
   final String imageUrl;
@@ -17,10 +17,7 @@ class CatDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          breedName,
-          style: const TextStyle(color: Colors.white),
-        ),
+        title: Text(breedName, style: const TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -42,18 +39,21 @@ class CatDetailScreen extends StatelessWidget {
               imageUrl.isEmpty
                   ? const CircularProgressIndicator(color: Colors.white)
                   : ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  placeholder: (context, url) =>
-                  const CircularProgressIndicator(color: Colors.white),
-                  errorWidget: (context, url, error) =>
-                  const Icon(Icons.error, color: Colors.red),
-                  fit: BoxFit.cover,
-                  width: 320,
-                  height: 400,
-                ),
-              ),
+                    borderRadius: BorderRadius.circular(20),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      placeholder:
+                          (context, url) => const CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                      errorWidget:
+                          (context, url, error) =>
+                              const Icon(Icons.error, color: Colors.red),
+                      fit: BoxFit.cover,
+                      width: 320,
+                      height: 400,
+                    ),
+                  ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(0.0),
