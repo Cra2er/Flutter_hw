@@ -69,6 +69,7 @@ class CatCard extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  height: 50,
                   width: 320,
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(

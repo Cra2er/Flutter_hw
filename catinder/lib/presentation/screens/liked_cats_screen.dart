@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/cat_model.dart';
 import '../../domain/cubits/liked_cats_cubit.dart';
 import '../widgets/breed_filter_dialog.dart';
 import 'cat_detail_screen.dart';
@@ -52,9 +51,9 @@ class LikedCatsScreen extends StatelessWidget {
         children: [
           const SizedBox(height: kToolbarHeight + 20),
           Expanded(
-            child: BlocBuilder<LikedCatsCubit, List<CatModel>>(
-              builder: (context, cats) {
-                if (cats.isEmpty) {
+            child: BlocBuilder<LikedCatsCubit, LikedCatsState>(
+              builder: (context, state) {
+                if (state.likedCats.isEmpty) {
                   return const Center(
                     child: Text(
                       'Like cats to save them here 🐱',
@@ -71,9 +70,9 @@ class LikedCatsScreen extends StatelessWidget {
                     horizontal: 16,
                     vertical: 8,
                   ),
-                  itemCount: cats.length,
+                  itemCount: state.likedCats.length,
                   itemBuilder: (_, index) {
-                    final cat = cats[index];
+                    final cat = state.likedCats[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(

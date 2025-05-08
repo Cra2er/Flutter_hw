@@ -21,6 +21,7 @@ class CatScreenController {
   int likeCount = 0;
   int dislikeCount = 0;
   bool isLoading = false;
+  bool isOnline = true;
 
   CatScreenController(this.context, this.vsync);
 
@@ -35,6 +36,9 @@ class CatScreenController {
       end: Offset.zero,
     ).animate(_controller);
 
+    final state = context.read<LikedCatsCubit>().state;
+    dislikeCount = state.dislikeCount;
+
     fetchCat();
   }
 
@@ -42,7 +46,7 @@ class CatScreenController {
 
   Future<void> fetchCat() async {
     isLoading = true;
-    (context as Element).markNeedsBuild(); // Forcing rebuild without setState
+    (context as Element).markNeedsBuild();
 
     try {
       final catData = await CatService.fetchRandomCat();
@@ -52,7 +56,6 @@ class CatScreenController {
         breedDescription = catData['breedDescription'] ?? '';
       }
     } catch (_) {
-      if (context.mounted) _showErrorDialog();
     } finally {
       isLoading = false;
       (context as Element).markNeedsBuild();
@@ -67,8 +70,12 @@ class CatScreenController {
 
   void onDislikePressed() => _handleButton(false);
 
+  void updateNetworkStatus(bool online) {
+    isOnline = online;
+  }
+
   void _handleSwipe(bool liked) {
-    if (isLoading) return;
+    if (isLoading || !isOnline) return;
     _controller.reset();
 
     animation = Tween<Offset>(
@@ -101,7 +108,15 @@ class CatScreenController {
       );
       likeCount++;
     } else {
-      dislikeCount++;
+      context.read<LikedCatsCubit>().removeCat(
+        CatModel(
+          imageUrl: '', // dummy
+          breedName: '',
+          breedDescription: '',
+          likedAt: DateTime.now(),
+        ),
+      );
+      dislikeCount = context.read<LikedCatsCubit>().getDislikeCount();
     }
   }
 
@@ -116,35 +131,6 @@ class CatScreenController {
               breedDescription: breedDescription,
             ),
       ),
-    );
-  }
-
-  void _showErrorDialog() {
-    showDialog(
-      context: context,
-      builder:
-          (_) => AlertDialog(
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            title: const Text(
-              'Ошибка загрузки',
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-            ),
-            content: const Text(
-              'Не удалось загрузить котика. Проверьте подключение к интернету.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  fetchCat();
-                },
-                child: const Text('Повторить'),
-              ),
-            ],
-          ),
     );
   }
 }

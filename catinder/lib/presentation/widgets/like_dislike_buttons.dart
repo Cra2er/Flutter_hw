@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class LikeDislikeButtons extends StatelessWidget {
   final VoidCallback onLike;
   final VoidCallback onDislike;
+  final bool isOnline;
 
   const LikeDislikeButtons({
     super.key,
     required this.onLike,
     required this.onDislike,
+    required this.isOnline,
   });
 
   @override
@@ -24,7 +26,7 @@ class LikeDislikeButtons extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.heart_broken, color: Colors.white),
             iconSize: 50,
-            onPressed: onDislike,
+            onPressed: isOnline ? onDislike : null,
           ),
         ),
         const SizedBox(width: 50),
@@ -37,7 +39,7 @@ class LikeDislikeButtons extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.favorite, color: Colors.white),
             iconSize: 50,
-            onPressed: onLike,
+            onPressed: isOnline ? onLike : null,
           ),
         ),
       ],

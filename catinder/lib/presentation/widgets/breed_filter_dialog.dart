@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/cat_model.dart';
 import '../../domain/cubits/liked_cats_cubit.dart';
 
 class BreedFilterDialog extends StatelessWidget {
@@ -19,7 +18,7 @@ class BreedFilterDialog extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: BlocBuilder<LikedCatsCubit, List<CatModel>>(
+            child: BlocBuilder<LikedCatsCubit, LikedCatsState>(
               builder: (context, state) {
                 final cubit = context.read<LikedCatsCubit>();
                 final breeds = cubit.allBreeds;
@@ -30,7 +29,6 @@ class BreedFilterDialog extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Заголовок и кнопка
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -60,7 +58,6 @@ class BreedFilterDialog extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
 
-                    // Сетка пород
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
